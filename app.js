@@ -51,7 +51,7 @@ const userRouter = require('./router/user')
 app.use('/api', userRouter)
 
 // 错误中间件
-const joi = require('@hapi/joi')
+const joi = require('joi')
 app.use((err, req, res, next) => {
   // 数据验证失败
   if (err instanceof joi.ValidationError) {
