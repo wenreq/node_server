@@ -1,8 +1,8 @@
 /*
- * @Descripttion:
+ * @Descripttion: 用户信息校验模块
  * @Author: wen
  * @Date: 2022-06-12 21:55:50
- * @LastEditors: voanit
+ * @LastEditors: wen
  * @LastEditTime: 2022-06-12 22:42:53
  */
 // @hapi/joi 包，为表单中携带的每个数据项，定义验证规则
@@ -21,7 +21,7 @@ const username = joi.string().alphanum().min(1).max(10).required()
 // 密码验证规则
 const password = joi
   .string()
-  .pattern(/^[\S]{6, 12}$/)
+  .pattern(/^[\S]{6,12}$/)
   .required()
 
 // 注册和登录表单的验证规则对象
