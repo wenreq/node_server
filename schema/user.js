@@ -17,7 +17,7 @@ const joi = require('joi')
  * pattern(正则表达式) 值必须符合正则表达式的规则
  */
 // 用户名的校验规则
-const username = joi.string().alphanum().min(1).max(10).required()
+const username = joi.string().alphanum().min(2).max(12).required()
 // 密码验证规则
 const password = joi
   .string()
@@ -30,5 +30,5 @@ exports.reg_login_schema = {
   body: {
     username,
     password,
-  },
+  }
 }

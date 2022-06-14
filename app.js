@@ -36,12 +36,15 @@ app.use((req, res, next) => {
 })
 
 // 一定要在路由之前配置 解析 Token 的中间件
-const expressJWT = require('express-jwt')
+const {
+  expressjwt: expressJWT
+} = require('express-jwt')
 // 导入配置文件
 const config = require('./config')
 // 使用 .unless({ path: [/^\/api\//] }) 指定哪些接口不需要进行 Token 的身份认证
 app.use(expressJWT({
-  secret: config.jwtSecretKey
+  secret: config.jwtSecretKey,
+  algorithms: ["HS256"]
 }).unless({
   path: [/^\/api/]
 }))
@@ -57,6 +60,7 @@ app.use((err, req, res, next) => {
   if (err instanceof joi.ValidationError) {
     return res.cc(err)
   }
+  console.log(err.name)
   // 捕获身份认证失败的错误
   if (err.name === 'UnauthorizedError') return res.cc('身份认证失败！')
   // 未知错误
@@ -65,6 +69,6 @@ app.use((err, req, res, next) => {
 // write your code here...
 
 // 调用 app.listen 方法，指定端口号并启动 web 服务器
-app.listen(3007, function () {
-  console.log('Express server running at http://127.0.0.1:3007')
+app.listen(3307, function () {
+  console.log('Express server running at http://127.0.0.1:3307')
 })
