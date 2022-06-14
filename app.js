@@ -2,8 +2,8 @@
  * @Descripttion: 项目入口文件
  * @Author: wenshaochang
  * @Date: 2022-06-12 20:18:33
- * @LastEditors: wenshaochang
- * @LastEditTime: 2022-06-12 22:31:56
+ * @LastEditors: voanit
+ * @LastEditTime: 2022-06-14 22:14:59
  */
 // 导入 express 模块
 const express = require('express')
@@ -36,18 +36,18 @@ app.use((req, res, next) => {
 })
 
 // 一定要在路由之前配置 解析 Token 的中间件
-const {
-  expressjwt: expressJWT
-} = require('express-jwt')
+const { expressjwt: expressJWT } = require('express-jwt')
 // 导入配置文件
 const config = require('./config')
 // 使用 .unless({ path: [/^\/api\//] }) 指定哪些接口不需要进行 Token 的身份认证
-app.use(expressJWT({
-  secret: config.jwtSecretKey,
-  algorithms: ["HS256"]
-}).unless({
-  path: [/^\/api/]
-}))
+app.use(
+  expressJWT({
+    secret: config.jwtSecretKey,
+    algorithms: ['HS256'],
+  }).unless({
+    path: [/^\/api/],
+  })
+)
 
 // 导入并注册用户路由模块
 const userRouter = require('./router/user')

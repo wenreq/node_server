@@ -18,7 +18,7 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 
 // 注册用户的处理函数
-exports.register = (req, res) => {
+exports.reguser = (req, res) => {
   /**
    * 1. 检测表单数据是否合法
    * 2. 检测用户名是否被占用
@@ -53,9 +53,10 @@ exports.register = (req, res) => {
     const sql = 'insert into users set ?'
     // 4.2 调用 db.query() 执行 SQL 语句
     db.query(
-      sql, {
+      sql,
+      {
         username: userInfo.username,
-        password: userInfo.password
+        password: userInfo.password,
       },
       (err, results) => {
         // 判断 SQL 语句是否执行成功
@@ -94,7 +95,10 @@ exports.login = (req, res) => {
     if (results.length !== 1) return res.cc('登陆失败')
     // 3. 判断用户输入的登陆密码是否和数据库中的密码一致
     // 核心实现思路：调用 bcrypt.compareSync(用户提交的密码, 数据库中的密码) 方法比较密码是否一致。返回值是布尔值（true 一致、false 不一致）
-    const compareResult = bcrypt.compareSync(userInfo.password, results[0].password)
+    const compareResult = bcrypt.compareSync(
+      userInfo.password,
+      results[0].password
+    )
     // 如果对比的结果等于 false，则证明用户输入的密码错误
     if (!compareResult) {
       return res.cc('登陆失败！')
@@ -105,14 +109,14 @@ exports.login = (req, res) => {
     const user = {
       ...results[0],
       password: '',
-      user_pic: ''
+      user_pic: '',
     }
     // 4.2 安装生成 Token 字符串的包 npm i jsonwebtoken@8.5.1
     // 4.3 在 /router_handler/user.js 模块的头部区域，导入 jsonwebtoken 包
     // 4.4 创建 config.js 文件， 并向外共享 加密 和 还原 Token 的 jwtSecretKey 字符串
     // 4.5 将用户信息对象加密成 Token 字符串
     const tokenStr = jwt.sign(user, config.jwtSecretKey, {
-      expiresIn: config.expiresIn
+      expiresIn: config.expiresIn,
     })
     // 4.6 将生成的 Token 字符串响应给客户端
     res.send({
