@@ -2,8 +2,8 @@
  * @Descripttion: 用户路由模块
  * @Author: wen
  * @Date: 2022-06-12 20:18:33
- * @LastEditors: wen
- * @LastEditTime: 2022-06-12 22:27:31
+ * @LastEditors: voanit
+ * @LastEditTime: 2022-07-09 22:11:09
  */
 const express = require('express')
 // 创建路由对象
@@ -26,6 +26,9 @@ router.post('/reguser', expressJoi(reg_login_schema), userHandler.reguser)
 // 登陆
 // 1. 检测表单数据是否合法
 router.post('/login', expressJoi(reg_login_schema), userHandler.login)
+
+// tree
+router.get('/tree', userHandler.tree)
 
 // 将路由对象共享出去
 module.exports = router

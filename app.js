@@ -3,12 +3,14 @@
  * @Author: wenshaochang
  * @Date: 2022-06-12 20:18:33
  * @LastEditors: voanit
- * @LastEditTime: 2022-06-14 22:14:59
+ * @LastEditTime: 2022-07-09 22:01:01
  */
 // 导入 express 模块
 const express = require('express')
 // 创建 express 的服务器实例
 const app = express()
+// 专门用来辅助操作路径
+const path = require('path')
 
 // 导入 cors 中间件
 const cors = require('cors')
@@ -21,6 +23,8 @@ app.use(
     extends: false,
   })
 )
+console.log(path.resolve(__dirname, './public'))
+app.use(express.static('./public'))
 
 // 一定要在路由之前，封装 res.cc 函数
 // 响应数据的中间件
@@ -45,7 +49,7 @@ app.use(
     secret: config.jwtSecretKey,
     algorithms: ['HS256'],
   }).unless({
-    path: [/^\/api/],
+    path: ['/public', { url: /^\/api/, method: ['GET', 'POST'] }],
   })
 )
 

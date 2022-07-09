@@ -2,8 +2,8 @@
  * @Descripttion:  用户路由处理函数模块
  * @Author: wen
  * @Date: 2022-06-12 20:31:35
- * @LastEditors: wen
- * @LastEditTime: 2022-06-12 22:37:35
+ * @LastEditors: voanit
+ * @LastEditTime: 2022-07-09 22:09:25
  */
 /**
  * 在这里定义和用户相关的路由处理函数，供 /router/user.js 模块进行调用
@@ -125,4 +125,56 @@ exports.login = (req, res) => {
       token: 'Bearer ' + tokenStr, // 为了方便客户端使用 Token，在服务器端直接拼接上 Bearer 的前缀
     })
   })
+}
+
+// tree
+exports.tree = (req, res) => {
+  let data = {
+    success: true,
+    msg: '成功',
+    data: [
+      {
+        id: 1,
+        text: 'Folder1',
+        children: [
+          {
+            text: 'File1',
+            checked: true,
+          },
+          {
+            text: 'Books',
+            state: 'open',
+            attributes: {
+              url: '/demo/book/abc',
+              price: 100,
+            },
+            children: [
+              {
+                text: 'PhotoShop',
+                checked: true,
+              },
+              {
+                id: 8,
+                text: 'Sub Bookds',
+                state: 'open',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        text: 'Languages',
+        state: 'open',
+        children: [
+          {
+            text: 'Java',
+          },
+          {
+            text: 'C#',
+          },
+        ],
+      },
+    ],
+  }
+  res.send(data)
 }
